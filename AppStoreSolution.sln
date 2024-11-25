@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppStore", "AppStore\AppStore.csproj", "{C24724B5-4D2F-4CE8-9E46-CA687875A63B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppStore", "AppStore\AppStore.csproj", "{C24724B5-4D2F-4CE8-9E46-CA687875A63B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
