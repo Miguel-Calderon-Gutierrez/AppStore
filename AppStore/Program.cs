@@ -54,6 +54,7 @@ using (var ambiente = app.Services.CreateScope())
         var userManager = service.GetRequiredService<UserManager<ApplicationUser>>();
         var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
 
+        await context.Database.MigrateAsync();
         await LoadDatabase.InsertarData(context, userManager, roleManager);
     }
     catch (Exception e) { 
