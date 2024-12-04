@@ -1,19 +1,21 @@
+using AppStore.Models.Domain;
 using AppStore.Models.Domain.Context;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddDbContext<DatabaseContext>(
-    opt => {
-        opt.LogTo(Console.WriteLine, new []{ 
+    opt =>
+    {
+        opt.LogTo(Console.WriteLine, new[]{
             DbLoggerCategory.Database.Command.Name},
         LogLevel.Information).EnableSensitiveDataLogging();
 
         opt.UseSqlite(builder.Configuration.GetConnectionString("SqliteDatabase"));
-    }  
+    }
   );
 
 var app = builder.Build();
@@ -37,5 +39,23 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+using (var ambiente = app.Services.CreateScope())
+{
+    var service = ambiente.ServiceProvider;
+
+    try {
+        var context = service.GetRequiredService<DatabaseContext>();
+        var userManager = service.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
+
+        await LoadDatabase.InsertarData(context, userManager, roleManager);
+    }
+    catch (Exception e) { 
+        var logging = service.GetRequiredService<ILogger<Program>>();
+        logging.LogError(e, "Ocurrio un error en la insercion de datos");
+    }
+}
+
 
 app.Run();
