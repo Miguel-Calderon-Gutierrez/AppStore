@@ -87,8 +87,27 @@ namespace AppStore.Repositories.Implementation
                 int count = list.Count;
                 int totalPages = (int)Math.Ceiling(count / (double)pageSize);
                 list.Skip((currentPage - 1) * pageSize).Take(pageSize);
+                data.PageSize = pageSize;
+                data.CurrentPage = currentPage;
+                data.TotalPage = totalPages;
             }
 
+            foreach (var libro in list)
+            {
+                var categorias = (
+                    from categoria in _dbContext.Categorias
+                    join lc in _dbContext.LibroCategorias
+                    on categoria.Id equals lc.CategoriaId
+                    where lc.Id == libro.Id
+                    select categoria.Nombre
+                    ).ToList();
+
+                var categoriaNombres = string.Join(",", categorias);
+                libro.CategoriasNames = categoriaNombres;
+
+            }
+
+            data.LibroList = list.AsQueryable();
 
             return data;
         }
