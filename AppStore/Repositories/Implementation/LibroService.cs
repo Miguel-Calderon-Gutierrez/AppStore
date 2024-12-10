@@ -72,7 +72,25 @@ namespace AppStore.Repositories.Implementation
 
         public LibroListVm List(string term = "", bool paging = false, int currentPage = 0)
         {
-            return null;
+            var data = new LibroListVm();
+            var list = _dbContext.Libros!.ToList();
+
+            if (!string.IsNullOrEmpty(term))
+            {
+                term = term.ToLower();
+                list = list.Where(a => a.Titulo!.ToLower().Contains(term)).ToList();
+            }
+
+            if (paging)
+            {
+                int pageSize = 5;
+                int count = list.Count;
+                int totalPages = (int)Math.Ceiling(count / (double)pageSize);
+                list.Skip((currentPage - 1) * pageSize).Take(pageSize);
+            }
+
+
+            return data;
         }
 
         public bool Update(Libro libro)
