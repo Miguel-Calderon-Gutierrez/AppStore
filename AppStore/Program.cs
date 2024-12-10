@@ -1,5 +1,7 @@
 using AppStore.Models.Domain;
 using AppStore.Models.Domain.Context;
+using AppStore.Repositories.Abstract;
+using AppStore.Repositories.Implementation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +23,8 @@ builder.Services.AddDbContext<DatabaseContext>(
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<DatabaseContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<ILibroService, LibroService>();
 
 var app = builder.Build();
 
