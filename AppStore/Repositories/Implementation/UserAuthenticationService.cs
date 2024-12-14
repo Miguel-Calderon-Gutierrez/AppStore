@@ -28,7 +28,7 @@ namespace AppStore.Repositories.Implementation
                 return status;
             }
 
-            if (await _userManager.CheckPasswordAsync(user, login.Password!)) {
+            if (!await _userManager.CheckPasswordAsync(user, login.Password!)) {
                 status.StatusCode = 0;
                 status.Message = "El Password es invalido";
                 return status;
