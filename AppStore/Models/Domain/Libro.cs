@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppStore.Models.Domain
@@ -20,6 +21,11 @@ namespace AppStore.Models.Domain
         public List<int>? Categorias { get; set; }
         [NotMapped]
         public string? CategoriasNames { get; set; }
-
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
+        [NotMapped]
+        public IEnumerable<SelectListItem>? CategoriasList { get; set; }
+        [NotMapped]
+        public MultiSelectList? MultiCategoriasList { get; set; }
     }
 }
