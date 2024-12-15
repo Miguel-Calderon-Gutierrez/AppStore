@@ -1,11 +1,12 @@
 ﻿using AppStore.Models.Domain;
 using AppStore.Repositories.Abstract;
-using AppStore.Repositories.Implementation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AppStore.Controllers
 {
+    [Authorize]
     public class LibroController : Controller
     {
         private readonly ILibroService _libroService;
@@ -78,6 +79,44 @@ namespace AppStore.Controllers
             return View(libro);
         }
 
+        [HttpPost]
+        public IActionResult Edit(Libro libro)
+        {
+            var categoriasDeLibro = _libroService.GetCategoriaByLibroId(libro.Id);
+            var multiSelectListCategorias = new MultiSelectList(_categoriaService.List(), "Id", "Nombre", categoriasDeLibro);
+            libro.MultiCategoriasList = multiSelectListCategorias;
+
+            if (!ModelState.IsValid)
+            {
+                return View(libro);
+            }
+
+            if (libro.ImageFile != null)
+            {
+                var fileResultado = _fileService.SaveImage(libro.ImageFile);
+                if (fileResultado.Item1 == 0)
+                {
+                    TempData["msg"] = "No se pudo guardar la imagen nueva";
+                    return View(libro);
+                }
+
+                var imagenName = fileResultado.Item2;
+                libro.Imagen = imagenName;
+            }
+
+            var resultadoLibro = _libroService.Update(libro);
+
+            if (!resultadoLibro)
+            {
+                TempData["msg"] = "Error al actualizar el libro";
+                return View(libro);
+            }
+
+
+            TempData["msg"] = "Se actualizó con exito";
+            return View(libro);
+        }
+
         public IActionResult LibroList()
         {
             var libros = _libroService.List();
@@ -87,6 +126,7 @@ namespace AppStore.Controllers
 
         public IActionResult Delete(int id)
         {
+            _libroService.Delete(id);
             return RedirectToAction(nameof(LibroList));
         }
     }
