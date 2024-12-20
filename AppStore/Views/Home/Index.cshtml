@@ -4,8 +4,8 @@
 }
 
 <section class="search-bar">
-    <form>
-        <input type="text" placeholder="buscar libro">
+    <form asp-action="Index" method="get">
+        <input type="text" name="term" placeholder="Buscar libro" value="@ViewData["CurrentTerm"]">
         <button type="submit"><i class="fa fa-search"></i></button>
     </form>
 </section>
@@ -27,6 +27,7 @@
     }
 </section>
 
+@*
 <div class="pagination">
     <a href="#">&laquo;</a>
     <a href="#">1</a>
@@ -37,4 +38,6 @@
     <a href="#">6</a>
     <a href="#">&raquo;</a>
 </div>
+*@
+
 

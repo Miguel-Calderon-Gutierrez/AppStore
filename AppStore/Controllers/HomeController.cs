@@ -14,6 +14,7 @@ namespace AppStore.Controllers
 
         public IActionResult Index(string term = "", int currentPage = 1)
         {
+            ViewData["CurrentTerm"] = term; // Mantener el término actual en la vista
             var libros = _libroService.List(term, true, currentPage);
             return View(libros);
         }

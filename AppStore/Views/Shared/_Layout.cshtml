@@ -19,22 +19,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
+  
     <nav class="nav-bar">
         <div class="logo">
             libreria store
         </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="fa fa-bars"></i>
+        </div>
         <ul class="nav-link">
             <li><a class="active" href="/Home/Index">Inicio</a></li>
             <li><a href="/Home/About">About</a></li>
-           
             @if (!string.IsNullOrEmpty(username))
             {
                 <li>
                     <a href="#">Admin <i class="fa fa-caret-down"></i></a>
-
                     <ul class="dropdown-nav-link">
                         <li><a href="/Categoria/Add">Categoria</a></li>
-                        <li><a href="/Libro/Add">Libro</a></li>                     
+                        <li><a href="/Libro/Add">Libro</a></li>
                         <li><a href="/UserAuthentication/Logout">Logout</a></li>
                     </ul>
                 </li>
@@ -42,9 +44,10 @@
             else
             {
                 <li><a href="/UserAuthentication/Login">Login</a></li>
-            }            
+            }
         </ul>
     </nav>
+
 
     <div class="container">
         @RenderBody()
@@ -54,4 +57,12 @@
         &#169; Miguel Calderon
     </footer>
 </body>
+
+<script>
+    document.getElementById('mobile-menu').addEventListener('click', function () {
+        const navLinks = document.querySelector('.nav-link');
+        navLinks.classList.toggle('show');
+    });
+</script>
+
 </html>
