@@ -1,33 +1,34 @@
 ﻿@model AppStore.Models.Domain.Categoria
-@{
-}
 
-<form class="w-40" asp-action="Edit" method="post" enctype="multipart/form-data">
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <h2>Actualizar Categoría</h2>
 
-    <h2>Actualizar Categoria</h2>
-    <input type="hidden" class="input" asp-for="Id"/>
+    <!-- Campo oculto para el ID -->
+    <input type="hidden" asp-for="Id" />
 
-
+    <!-- Campo para el nombre -->
     <div class="input-container">
-        <label asp-for="Nombre" class="w-40">Autor</label>
+        <label asp-for="Nombre">Nombre</label>
         <input type="text" class="input" asp-for="Nombre" />
 
-        <div class="message-box pd-x-28 error">
+        <!-- Mensaje de validación -->
+        <div class="message-box error">
             <span asp-validation-for="Nombre"></span>
         </div>
     </div>
-   
 
+    <!-- Mensajes desde TempData -->
     @if (TempData["msg"] != null)
     {
-        <div class="alert-mb1">
+        <div class="alert">
             @TempData["msg"]
         </div>
     }
 
+    <!-- Botones -->
     <div class="input-container">
-        <button class="btn btn-default" type="submit">Guardar</button>
-        <a class="btn btn-sec" href="/Categoria/CategoriaList">Ver todos los libros</a>
+        <button class="btn" type="submit">Guardar</button>
+        <a class="btn btn-sec" href="/Categoria/CategoriaList">Ver todas las categorías</a>
     </div>
-
 </form>
+

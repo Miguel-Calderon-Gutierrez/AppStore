@@ -1,38 +1,38 @@
 ﻿@model AppStore.Models.DTO.CategoriaListVm
-@{
-
-}
-
 <div class="tbl-container">
-    <h2>Administracion de libros</h2>
+    <h2>Administración de Categorías</h2>
 
+    <!-- Tabla de categorías -->
     <table>
-        <tr>
-            <td>Nombre categoria</td>
-            <td>Acción</td>
-        </tr>
-
-        @foreach (var item in Model.CategoriaList!)
-        {
+        <thead>
             <tr>
-                <td>@item.Nombre</td>
-                <td>
-                    <a href="/Categoria/Edit?id=@item.Id" class="btn btn-default">
-                        <i class="fa fa-edit"></i>
-                    </a>
-
-                    <a href="/Categoria/Delete?id=@item.Id" onclick="return window.confirm('Estas seguro de eliminar @item.Nombre')" class="btn btn-danger">
-                        <i class="fa fa-trash"></i>
-                    </a>
-
-
-                </td>
+                <th>Nombre Categoría</th>
+                <th>Acción</th>
             </tr>
-
-        }
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CategoriaList!)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>
+                        <!-- Botones de acción -->
+                        <a href="/Categoria/Edit?id=@item.Id" class="btn">
+                            <i class="fa fa-edit"></i> Editar
+                        </a>
+                        <a href="/Categoria/Delete?id=@item.Id"
+                           onclick="return window.confirm('¿Estás seguro de eliminar @item.Nombre?')"
+                           class="btn btn-sec">
+                            <i class="fa fa-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 
+    <!-- Botón de retroceso -->
     <div class="input-container">
-        <a href="/Categoria/Add" class="btn btn-sec">Atras</a>
+        <a href="/Categoria/Add" class="btn">Agregar Nueva Categoría</a>
     </div>
 </div>

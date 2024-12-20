@@ -1,21 +1,21 @@
-﻿@model AppStore.Models.Domain.Libro;
-@{
+﻿@model AppStore.Models.Domain.Libro
 
-}
-
-<div class="movie-detail w-80 m-auto">
-    <div class="img-container">
-        <img src="/Uploads/@Model.Imagen" alt="Portada libro" />
+<div class="movie-card m-auto">
+    <!-- Imagen del libro -->
+    <div class="movie-image">
+        <img src="/Uploads/@Model.Imagen" alt="Portada del libro @Model.Titulo" class="limited-width" />
     </div>
 
-    <div class="detail-container">
+    <!-- Detalles del libro -->
+    <div class="info-container">
         <h3>@Model.Titulo</h3>
-        <h4>@Model.CategoriasNames</h4>
-        <h4>@Model.CreateDate</h4>
-        <h4>Autor: @Model.Autor</h4>
+        <p><strong>Categorías:</strong> @Model.CategoriasNames</p>
+        <p><strong>Fecha de publicación:</strong> @Model.CreateDate</p>
+        <p><strong>Autor:</strong> @Model.Autor</p>
     </div>
 
-    <div class="w-80 m-auto">
-        <a href="/Home/Index" class="btn btn-default">Atras</a>
+    <!-- Botón de navegación -->
+    <div class="button-container mt-1">
+        <a href="/Home/Index" class="btn">Atrás</a>
     </div>
 </div>

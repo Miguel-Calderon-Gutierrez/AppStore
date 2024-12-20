@@ -529,3 +529,20 @@ footer {
     }
 }
 
+/* Estilo general para enlaces */
+a {
+    color: inherit; /* Hereda el color del elemento padre */
+    text-decoration: none; /* Elimina el subrayado */
+}
+
+    /* Evitar color morado y subrayado para enlaces visitados */
+    a:visited {
+        color: inherit; /* Hereda el color predeterminado */
+        text-decoration: none; /* Elimina el subrayado */
+    }
+
+    /* Evitar color morado y subrayado mientras está activo (clic) */
+    a:active {
+        color: inherit; /* Mantiene el color */
+        text-decoration: none; /* Sin subrayado */
+    }

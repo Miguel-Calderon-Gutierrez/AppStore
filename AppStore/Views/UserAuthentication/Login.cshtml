@@ -3,36 +3,40 @@
 
 }
 
-<form class="w-40" asp-action="Login" method="post">
-    <h2 class="pb-10">Login</h2>
 
-    <div class="input-container">
-        <label asp-for="Username" class="w-40">Username</label>
-        <input type="text" class="input" asp-for="Username" />
+<div class="login-container">
+    <form class="login-form" asp-action="Login" method="post">
+        <h2 class="pb-10">Iniciar Sesión</h2>
 
-        <div class="message-box pd-x-28 error">
-            <span asp-validation-for="Username"></span>
+        <div class="input-container">
+            <label asp-for="Username">Usuario</label>
+           <div>
+                <input type="text" class="input" asp-for="Username" />
+           </div>
+            <div class="message-box error">
+                <span asp-validation-for="Username"></span>
+            </div>
         </div>
-    </div>
 
-    <div class="input-container">
-        <label asp-for="Password" class="w-40">Password</label>
-        <input type="password" class="input" asp-for="Password" />
-
-        <div class="message-box pd-x-28 error">
-            <span asp-validation-for="Password"></span>
+        <div class="input-container">
+            <label asp-for="Password">Contraseña</label>
+            <div>
+                <input type="password" class="input" asp-for="Password" />
+            </div>
+            <div class="message-box error">
+                <span asp-validation-for="Password"></span>
+            </div>
         </div>
-    </div>
 
-    @if (TempData["msg"] != null)
-    {
-        <div class="alert mb-1">
-            @TempData["msg"]
+        @if (TempData["msg"] != null)
+        {
+            <div class="alert mb-1">
+                @TempData["msg"]
+            </div>
+        }
+
+        <div class="input-container">
+            <button class="btn btn-default" type="submit">Entrar</button>
         </div>
-    }
-
-    <div class="input-container">
-        <button class="btn btn-default" type="submit">Login</button>
-    </div>
-
-</form>
+    </form>
+</div>
