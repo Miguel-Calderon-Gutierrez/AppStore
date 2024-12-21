@@ -59,7 +59,7 @@ namespace AppStore.Repositories.Implementation
                 var wwwPath = this._environment.WebRootPath;
                 var path = Path.Combine(wwwPath, "Uploads\\", imagenName);
 
-                if (Directory.Exists(path))
+                if (File.Exists(path))
                 {
                     System.IO.File.Delete(path);
                     return true;

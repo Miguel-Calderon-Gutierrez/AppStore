@@ -8,8 +8,9 @@
 
     <table>
         <tr>
-            <td>Titulo</td>   
-            <td>Fecha</td>
+            <td>Titulo</td>
+            <td>Categoria</td>
+            <td>Fecha</td>       
             <td>Imagen</td>
             <td>Autor</td>
             <td>Acción</td>
@@ -18,7 +19,8 @@
         @foreach (var item in Model.LibroList!)
         {
             <tr>
-                <td>@item.Titulo</td>             
+                <td>@item.Titulo</td>
+                <td>@item.CategoriasNames</td>
                 <td>@item.CreateDate</td>
                 <td><img src="/Uploads/@item.Imagen" alt="Imagen de @item.Titulo" style="height:60px; width:auto;"/></td>
                 <td>@item.Autor</td>

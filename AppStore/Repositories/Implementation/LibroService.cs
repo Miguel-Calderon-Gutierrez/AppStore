@@ -8,10 +8,12 @@ namespace AppStore.Repositories.Implementation
     public class LibroService : ILibroService
     {
         private readonly DatabaseContext _dbContext;
+        private readonly IFileService _fileService;
 
-        public LibroService(DatabaseContext dbContext)
+        public LibroService(DatabaseContext dbContext ,IFileService fileService)
         {
             _dbContext = dbContext;
+            _fileService = fileService;
         }
 
         public bool Add(Libro libro)
@@ -53,6 +55,9 @@ namespace AppStore.Repositories.Implementation
 
                 var libroCategorias = _dbContext.LibroCategorias!.Where(categoria => categoria.LibroId == libro.Id);
                 _dbContext.LibroCategorias!.RemoveRange(libroCategorias);
+
+                _fileService.DeleteImage(libro.Imagen!);
+
                 _dbContext.Libros!.Remove(libro);
 
                 _dbContext.SaveChanges();
@@ -67,7 +72,19 @@ namespace AppStore.Repositories.Implementation
 
         public Libro GetById(int id)
         {
-            return _dbContext.Libros!.Find(id)!;
+            var libro = _dbContext.Libros!.Find(id)!;
+            var categorias = (
+                   from categoria in _dbContext.Categorias
+                   join lc in _dbContext.LibroCategorias!
+                   on categoria.Id equals lc.CategoriaId
+                   where lc.LibroId == libro.Id
+                   select categoria.Nombre
+                   ).ToList();
+
+            var categoriaNombres = string.Join(",", categorias);
+            libro.CategoriasNames = categoriaNombres;
+
+            return libro;
         }
 
         public LibroListVm List(string term = "", bool paging = false, int currentPage = 0)
@@ -98,7 +115,7 @@ namespace AppStore.Repositories.Implementation
                     from categoria in _dbContext.Categorias
                     join lc in _dbContext.LibroCategorias
                     on categoria.Id equals lc.CategoriaId
-                    where lc.Id == libro.Id
+                    where lc.LibroId == libro.Id
                     select categoria.Nombre
                     ).ToList();
 
